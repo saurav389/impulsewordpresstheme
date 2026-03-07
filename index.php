@@ -6,24 +6,7 @@
   
 
     <!-- Announcement Banner -->
-    <div class="announcement-banner">
-        <div class="banner-item">
-            <span class="banner-emoji">🟢</span>
-            <span>Admissions Open 2024!</span>
-        </div>
-        <div class="banner-item">
-            <span class="banner-emoji">⚡</span>
-            <span>Limited Seats!</span>
-        </div>
-        <div class="banner-item">
-            <span class="banner-emoji">🎓</span>
-            <span>Free Demo Class</span>
-        </div>
-        <div class="banner-item">
-            <span class="banner-emoji">👨‍💼</span>
-            <span>Expert Mentorship</span>
-        </div>
-    </div>
+  
 
     <!-- Premium Hero Section -->
     <section class="premium-hero" id="home">
@@ -49,7 +32,7 @@
             <div class="hero-left">
                 <!-- Top Badges -->
                 <div class="hero-badges-top">
-                    <span class="badge-item badge-green">🟢 Admissions Open 2024!</span>
+                    <span class="badge-item badge-green">🟢 Admissions Open 2026!</span>
                     <span class="badge-item badge-orange">⚡ Limited Seats</span>
                     <span class="badge-item badge-purple">🎓 Free Demo Class</span>
                 </div>
@@ -218,249 +201,83 @@
         <div class="container">
             <h2 class="section-title">Master In-Demand Skills</h2>
             <div class="courses-grid">
-                <!-- DCA Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>DCA</h3>
-                        <span class="course-icon">💻</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">3 Months</span>
+                <?php
+                // Query all courses from custom post type
+                $args = array(
+                    'post_type' => 'courses',
+                    'posts_per_page' => -1,
+                    'orderby' => 'date',
+                    'order' => 'DESC'
+                );
+                
+                $courses_query = new WP_Query($args);
+                
+                if ($courses_query->have_posts()) {
+                    while ($courses_query->have_posts()) {
+                        $courses_query->the_post();
+                        
+                        // Get ACF Fields
+                        $course_image = get_field('course_image');
+                        $course_level = get_field('course_level');
+                        $duration = get_field('course_duration');
+                        $fee = get_field('course_fee');
+                        $students = get_field('students');
+                        $course_title = get_the_title();
+                        
+                        // Get course URL
+                        $course_url = get_permalink();
+                ?>
+                    <div class="course-card">
+                        <div class="course-image-container">
+                            <?php if ($course_image): ?>
+                                <img src="<?php echo esc_url(is_array($course_image) ? $course_image['url'] : $course_image); ?>" alt="<?php echo esc_attr($course_title); ?>" class="course-image">
+                            <?php else: ?>
+                                <img src="https://via.placeholder.com/500x300?text=<?php echo urlencode($course_title); ?>" alt="<?php echo esc_attr($course_title); ?>" class="course-image">
+                            <?php endif; ?>
+                            <?php if ($course_level): ?>
+                                <span class="course-badge"><?php echo esc_html($course_level); ?></span>
+                            <?php endif; ?>
                         </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹5,999</span>
+                        <div class="course-card-header">
+                            <h3><?php echo esc_html($course_title); ?></h3>
+                            <span class="course-icon">💻</span>
                         </div>
-                    </div>
-                    <p class="course-description">Comprehensive course covering fundamental computer skills and office applications.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 450 students</span>
-                        <span class="course-level">Beginner</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- ADCA Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>ADCA</h3>
-                        <span class="course-icon">📊</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">6 Months</span>
+                        <div class="course-meta">
+                            <?php if ($duration): ?>
+                                <div class="meta-item">
+                                    <span class="meta-label">Duration</span>
+                                    <span class="meta-value"><?php echo esc_html($duration); ?></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($fee): ?>
+                                <div class="meta-item">
+                                    <span class="meta-label">Fee</span>
+                                    <span class="meta-value"><?php echo esc_html($fee); ?></span>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹9,999</span>
+                        <p class="course-description"><?php echo wp_trim_words(get_the_excerpt() ? get_the_excerpt() : get_the_content(), 15, '...'); ?></p>
+                        <div class="course-stats">
+                            <?php if ($students): ?>
+                                <span class="student-count">👥 <?php echo esc_html($students); ?> students</span>
+                            <?php endif; ?>
+                            <?php if ($course_level): ?>
+                                <span class="course-level"><?php echo esc_html($course_level); ?></span>
+                            <?php endif; ?>
                         </div>
+                        <a href="<?php echo esc_url($course_url); ?>" class="btn-primary">View Details →</a>
                     </div>
-                    <p class="course-description">Advanced computer applications with web basics and database fundamentals.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 320 students</span>
-                        <span class="course-level">Intermediate</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- Tally Prime Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>Tally Prime</h3>
-                        <span class="course-icon">📊</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">2 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹4,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Master accounting with Tally Prime - the most widely used accounting software.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 280 students</span>
-                        <span class="course-level">Beginner</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- DTP Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>DTP</h3>
-                        <span class="course-icon">✏️</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">3 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹6,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Professional design course covering graphic design tools and publishing.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 210 students</span>
-                        <span class="course-level">Beginner</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- Python Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>Python</h3>
-                        <span class="course-icon">🐍</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">4 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹7,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Learn Python programming from basics to advanced with real-world projects.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 380 students</span>
-                        <span class="course-level">Beginner</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- Java Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>Java</h3>
-                        <span class="course-icon">☕</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">5 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹8,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Master Java programming for building enterprise applications.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 290 students</span>
-                        <span class="course-level">Intermediate</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- C Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>C</h3>
-                        <span class="course-icon">⚙️</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">3 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹5,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Fundamental programming concepts and C language mastery.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 250 students</span>
-                        <span class="course-level">Beginner</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- C++ Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>C++</h3>
-                        <span class="course-icon">🚀</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">4 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹7,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Advanced programming with C++ object-oriented principles.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 200 students</span>
-                        <span class="course-level">Intermediate</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- Full Stack Development Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>Full Stack Development</h3>
-                        <span class="course-icon">🌐</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">6 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹12,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Complete full-stack web development from frontend to backend.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 420 students</span>
-                        <span class="course-level">Advanced</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
-
-                <!-- MERN Stack Course -->
-                <div class="course-card">
-                    <div class="course-card-header">
-                        <h3>MERN Stack</h3>
-                        <span class="course-icon">⚛️</span>
-                    </div>
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">5 Months</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Fee</span>
-                            <span class="meta-value">₹11,999</span>
-                        </div>
-                    </div>
-                    <p class="course-description">Modern JavaScript stack for building scalable web applications.</p>
-                    <div class="course-stats">
-                        <span class="student-count">👥 350 students</span>
-                        <span class="course-level">Advanced</span>
-                    </div>
-                    <button class="btn-primary">View Details →</button>
-                </div>
+                <?php
+                    }
+                    wp_reset_postdata();
+                } else {
+                    echo '<p style="grid-column: 1 / -1; text-align: center; color: #cbd5e1; padding: 2rem;">No courses available at the moment.</p>';
+                }
+                ?>
             </div>
 
             <div class="view-all-btn">
-                <button class="btn-secondary">View All Courses</button>
+                <a href="<?php echo site_url('/courses'); ?>" class="btn-secondary" style="text-decoration: none; display: inline-block;">View All Courses</a>
             </div>
         </div>
     </section>
@@ -678,7 +495,7 @@
     <!-- Contact Section -->
     <section class="contact-section section-padding" id="contact">
         <div class="container">
-            <h2 class="section-title">Contact Impulse Academy</h2>
+            <h2 class="section-title">Contact Us</h2>
             
             <div class="contact-form">
                 <form method="post" onsubmit="handleContactForm(event)">
@@ -705,20 +522,7 @@
                 </form>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 4rem;">
-                <div style="text-align: center;">
-                    <h3 style="color: white; margin-bottom: 1rem;">📧 Email</h3>
-                    <a href="mailto:impulsebirsanagar@gmail.com" style="color: #2563eb; text-decoration: none;">impulsebirsanagar@gmail.com</a>
-                </div>
-                <div style="text-align: center;">
-                    <h3 style="color: white; margin-bottom: 1rem;">📱 Phone</h3>
-                    <p style="color: #cbd5e1;"><a href="tel:7979815545" style="color: #2563eb; text-decoration: none;">7979815545</a> / <a href="tel:9709034301" style="color: #2563eb; text-decoration: none;">9709034301</a></p>
-                </div>
-                <div style="text-align: center;">
-                    <h3 style="color: white; margin-bottom: 1rem;">📍 Location</h3>
-                    <p style="color: #cbd5e1;">Birsa Nagar, Ranchi<br>Jharkhand, India</p>
-                </div>
-            </div>
+            
         </div>
     </section>
 

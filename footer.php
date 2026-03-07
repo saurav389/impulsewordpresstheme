@@ -2,80 +2,48 @@
 
 <!-- Footer Section -->
 <footer class="footer-section">
-    <style>
-        .footer-section {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(245, 158, 11, 0.1));
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 3rem 1rem 1rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .footer-section-item h4 {
-            color: white;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .footer-section-item p {
-            color: #cbd5e1;
-            line-height: 1.625;
-        }
-
-        .footer-section-item ul {
-            list-style: none;
-        }
-
-        .footer-section-item ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section-item ul li a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section-item ul li a:hover {
-            color: #2563eb;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #64748b;
-            max-width: 1200px;
-            margin: 0 auto 0 1rem;
-        }
-    </style>
-
     <div class="footer-content">
         <!-- About Section -->
         <div class="footer-section-item">
             <h4><?php bloginfo('name'); ?></h4>
             <p><?php bloginfo('description'); ?></p>
+            <div class="footer-contact-info">
+                <div class="contact-item">
+                    <h5>📧 Email</h5>
+                    <a href="mailto:impulsebirsanagar@gmail.com">impulsebirsanagar@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <h5>📱 Phone</h5>
+                    <div>
+                        <a href="tel:7979815545">7979815545</a> / <a href="tel:9709034301">9709034301</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <h5>📍 Location</h5>
+                    <p>Birsa Nagar, Ranchi<br>Jharkhand, India</p>
+                </div>
+            </div>
         </div>
-
-        <!-- Quick Links -->
+     
+        <!-- Quick Links - WordPress Menu -->
         <div class="footer-section-item">
             <h4><?php esc_html_e('Quick Links', 'impulse-academy-clone'); ?></h4>
-            <ul>
-                <li><a href="#home"><?php esc_html_e('Home', 'impulse-academy-clone'); ?></a></li>
-                <li><a href="#courses"><?php esc_html_e('Courses', 'impulse-academy-clone'); ?></a></li>
-                <li><a href="#about"><?php esc_html_e('About', 'impulse-academy-clone'); ?></a></li>
-                <li><a href="#contact"><?php esc_html_e('Contact', 'impulse-academy-clone'); ?></a></li>
-            </ul>
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'footer-menu',
+                'menu' => 'Footer Menu',
+                'container' => false,
+                'fallback_cb' => function() {
+                    echo '<ul>';
+                    echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html_e('Home', 'impulse-academy-clone') . '</a></li>';
+                    echo '<li><a href="' . esc_url(home_url('/courses')) . '">' . esc_html_e('Courses', 'impulse-academy-clone') . '</a></li>';
+                    echo '<li><a href="' . esc_url(home_url('/about')) . '">' . esc_html_e('About', 'impulse-academy-clone') . '</a></li>';
+                    echo '<li><a href="' . esc_url(home_url('/contact')) . '">' . esc_html_e('Contact', 'impulse-academy-clone') . '</a></li>';
+                    echo '</ul>';
+                },
+                'depth' => 2
+            ));
+            ?>
         </div>
 
         <!-- Follow Us -->
@@ -308,6 +276,292 @@
         });
     });
 </script>
+
+<style>
+/* ===== Footer Section Styles ===== */
+.footer-section {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+    border-top: 1px solid rgba(0, 255, 255, 0.1);
+    padding: 60px 20px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ffff, transparent);
+    opacity: 0.5;
+}
+
+/* Footer Content Grid */
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    padding: 40px 0;
+}
+
+/* Footer Section Items */
+.footer-section-item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-section-item h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-section-item h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #00ffff, #2563eb);
+    border-radius: 2px;
+}
+
+.footer-section-item p {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Contact Info Section */
+.footer-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-item h5 {
+    font-size: 0.95rem;
+    color: #00ffff;
+    margin: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-item a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    width: fit-content;
+}
+
+.contact-item a:hover {
+    color: #00ffff;
+    transform: translateX(5px);
+}
+
+.contact-item p {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ===== Footer Menu Styles ===== */
+.footer-section-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.footer-section-item ul li {
+    margin: 0;
+    list-style: none;
+}
+
+.footer-section-item ul li a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 8px 0 8px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+}
+
+.footer-section-item ul li a:hover {
+    color: #00ffff;
+    border-left-color: #00ffff;
+    padding-left: 16px;
+}
+
+/* WordPress Menu Navigation */
+.footer-section-item .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.footer-section-item .menu li {
+    margin: 0;
+    list-style: none;
+}
+
+.footer-section-item .menu li a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 8px 0 8px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+}
+
+.footer-section-item .menu li a:hover {
+    color: #00ffff;
+    border-left-color: #00ffff;
+    padding-left: 16px;
+}
+
+/* Sub-menu styles */
+.footer-section-item .menu li ul,
+.footer-section-item ul ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.footer-section-item .menu li ul li,
+.footer-section-item ul ul li {
+    margin: 0;
+    list-style: none;
+}
+
+.footer-section-item .menu li ul li a,
+.footer-section-item ul ul li a {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    padding: 6px 0 6px 24px;
+    border-left: 2px solid transparent;
+}
+
+.footer-section-item .menu li ul li a:hover,
+.footer-section-item ul ul li a:hover {
+    color: #00ffff;
+    border-left-color: #00ffff;
+    padding-left: 28px;
+}
+
+/* ===== Footer Bottom ===== */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+    border-top: 1px solid rgba(0, 255, 255, 0.1);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .footer-section {
+        padding: 40px 15px 15px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 30px 0;
+    }
+
+    .footer-section-item h4 {
+        font-size: 1.1rem;
+    }
+
+    .footer-contact-info {
+        gap: 15px;
+    }
+
+    .contact-item h5 {
+        font-size: 0.85rem;
+    }
+
+    .footer-section-item ul li a,
+    .footer-section-item .menu li a {
+        font-size: 0.9rem;
+        padding: 7px 0 7px 10px;
+    }
+
+    .footer-section-item ul li a:hover,
+    .footer-section-item .menu li a:hover {
+        padding-left: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-section {
+        padding: 30px 12px 12px;
+    }
+
+    .footer-content {
+        gap: 25px;
+        padding: 25px 0;
+    }
+
+    .footer-section-item h4 {
+        font-size: 1rem;
+    }
+
+    .footer-section-item h4::after {
+        width: 20px;
+    }
+
+    .footer-bottom {
+        padding: 15px 0;
+    }
+
+    .footer-bottom p {
+        font-size: 0.8rem;
+    }
+}
+</style>
 
 <?php wp_footer(); ?>
 </body>
