@@ -887,7 +887,7 @@
             <div class="contact-info-item">
                 <div class="contact-info-icon">📧</div>
                 <div class="contact-info-label">Email Us</div>
-                <a href="mailto:impulsebirsanagar@gmail.com" class="contact-info-value">Send Message</a>
+                <a href="mailto:info@impulsecomputeracademy.com" class="contact-info-value">Send Message</a>
             </div>
         </div>
     </div>

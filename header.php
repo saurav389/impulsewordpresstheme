@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php bloginfo('name'); ?> - <?php bloginfo('description'); ?></title>
+    <title>IMPULSE COMPUTER ACADEMY</title>
     <?php wp_head(); ?>
     
     <!-- Swiper.js CSS -->

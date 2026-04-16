@@ -3,6 +3,38 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$ica_lms_bootstrap = get_stylesheet_directory() . '/lms/bootstrap.php';
+if (file_exists($ica_lms_bootstrap)) {
+    require_once $ica_lms_bootstrap;
+}
+
+/**
+ * TEMPORARY: Force role reset and cache clear for teacher/student post issues
+ * Remove this after you verify posts can be created
+ */
+add_action('admin_init', function() {
+    if (current_user_can('manage_options') && isset($_GET['ica_reset_roles'])) {
+        // Clear WordPress caches
+        wp_cache_flush();
+        delete_transient('ica_lms_rewrite_version');
+        
+        // Force role re-registration
+        remove_role('ica_lms_teacher');
+        remove_role('ica_lms_student');
+        
+        // Trigger init hooks to re-register roles
+        do_action('init');
+        
+        error_log('=== ICA LMS: Forced role reset and cache clear ===');
+        wp_safe_remote_post(admin_url('admin-ajax.php'), array(
+            'blocking' => false,
+        ));
+        
+        wp_redirect(remove_query_arg('ica_reset_roles'));
+        exit;
+    }
+}, 1);
+
 function impulse_clone_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -37,7 +69,7 @@ function impulse_clone_enqueue_assets() {
         'impulse-clone-style',
         get_stylesheet_uri(),
         array(),
-        filemtime(get_template_directory() . '/style.css')
+        filemtime(get_stylesheet_directory() . '/style.css')
     );
 
     // $react_css = impulse_clone_get_asset_uri('index-*.css');
@@ -87,29 +119,3 @@ add_filter('script_loader_tag', 'impulse_clone_module_script', 10, 3);
 //     return $title;
 // }
 // add_filter('pre_get_document_title', 'impulse_clone_title');
-function create_courses_cpt() {
-
-register_post_type('courses', array(
-    'labels' => array(
-        'name' => 'Courses',
-        'singular_name' => 'Course'
-    ),
-    'public' => true,
-    'has_archive' => true,
-    'rewrite' => array('slug' => 'courses'),
-    'menu_icon' => 'dashicons-welcome-learn-more',
-    'supports' => array('title','editor','thumbnail'),
-));
-
-}
-
-add_action('init','create_courses_cpt');
-function my_theme_register_menus() {
-    register_nav_menus(
-        array(
-            'primary-menu' => __( 'Primary Menu', 'Top Menu' ),
-            'footer-menu'  => __( 'Footer Menu', 'Bottom Menu' ),
-        )
-    );
-}
-add_action( 'after_setup_theme', 'my_theme_register_menus' );

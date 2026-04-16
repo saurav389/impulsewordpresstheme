@@ -16,24 +16,50 @@
                         <span class="info-icon">📞</span>
                         <div>
                             <p class="info-label">Call Us</p>
-                            <p class="info-value">+91 98765-43210</p>
+                            <p class="info-value">+91 7979815545</p>
                         </div>
                     </div>
                     <div class="quick-info-item">
                         <span class="info-icon">📧</span>
                         <div>
                             <p class="info-label">Email Us</p>
-                            <p class="info-value">hello@impulseacademy.com</p>
+                            <p class="info-value">info@impulsecomputeracademy.com</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="floating-card glass-premium">
-                    <div class="card-icon">💬</div>
-                    <h3>24/7 Support</h3>
-                    <p>Always here to help</p>
-                </div>
+                <form class="contact-form glass-premium" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a Subject</option>
+                            <option value="course-info">Course Information</option>
+                            <option value="admission">Admission Inquiry</option>
+                            <option value="corporate">Corporate Training</option>
+                            <option value="internship">Internship Program</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="4" required placeholder="Tell us more about your inquiry..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                </form>
             </div>
         </div>
     </div>
@@ -46,94 +72,27 @@
             <div class="info-card glass-premium">
                 <div class="info-icon-large">📍</div>
                 <h3>Our Location</h3>
-                <p class="info-text">Impulse Computer Academy <br>Mumbai, Maharashtra<br>India - 400001</p>
+                <p class="info-text">Impulse Computer Academy <br>Jamshedpur, Jharkhand<br>India - 400001</p>
                 <a href="#" class="info-link">View on Map →</a>
             </div>
 
             <div class="info-card glass-premium">
                 <div class="info-icon-large">📞</div>
                 <h3>Phone</h3>
-                <p class="info-text">Main: +91 98765-43210<br>Support: +91 98765-43211<br>Office Hours: 9 AM - 6 PM</p>
-                <a href="tel:+919876543210" class="info-link">Call Now →</a>
+                <p class="info-text">Main: +91 7979815545<br>Support: +91 9709034301<br>Office Hours: 9 AM - 8 PM</p>
+                <a href="tel:+917979815545" class="info-link">Call Now →</a>
             </div>
 
             <div class="info-card glass-premium">
                 <div class="info-icon-large">📧</div>
                 <h3>Email</h3>
-                <p class="info-text">General: hello@impulseacademy.com<br>Support: support@impulseacademy.com<br>Careers: careers@impulseacademy.com</p>
-                <a href="mailto:hello@impulseacademy.com" class="info-link">Email Us →</a>
+                <p class="info-text">General: info@impulsecomputeracademy.com<br>Support: support@impulsecomputeracademy.com<br>Careers: careers@impulsecomputeracademy.com</p>
+                <a href="mailto:info@impulsecomputeracademy.com" class="info-link">Email Us →</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Contact Form Section -->
-<section class="contact-form-section section-padding gradient-bg">
-    <div class="container">
-        <div class="form-wrapper">
-            <div class="form-header">
-                <h2 class="section-title">Send us a <span class="gradient-text">Message</span></h2>
-                <p class="section-subtitle">Fill out the form below and we'll respond promptly</p>
-            </div>
-
-            <form class="contact-form glass-premium" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Full Name *</label>
-                    <input type="text" id="name" name="name" required placeholder="John Doe">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="email" required placeholder="john@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+91 98765-43210">
-                </div>
-
-                <div class="form-group">
-                    <label for="subject">Subject *</label>
-                    <select id="subject" name="subject" required>
-                        <option value="">Select a Subject</option>
-                        <option value="course-info">Course Information</option>
-                        <option value="admission">Admission Inquiry</option>
-                        <option value="corporate">Corporate Training</option>
-                        <option value="internship">Internship Program</option>
-                        <option value="technical">Technical Support</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="course">Interested Course (Optional)</label>
-                    <select id="course" name="course">
-                        <option value="">Select a Course</option>
-                        <option value="web-dev">Web Development</option>
-                        <option value="java">Java Programming</option>
-                        <option value="python">Python Programming</option>
-                        <option value="mern">MERN Stack</option>
-                        <option value="data-science">Data Science</option>
-                        <option value="cloud">Cloud Computing</option>
-                    </select>
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="message">Message *</label>
-                    <textarea id="message" name="message" rows="6" required placeholder="Tell us more about your inquiry..."></textarea>
-                </div>
-
-                <div class="form-group checkbox">
-                    <input type="checkbox" id="agree" name="agree" required>
-                    <label for="agree">I agree to the privacy policy and terms of service *</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-large">Send Message</button>
-                <p class="form-note">We'll get back to you within 24 hours</p>
-            </form>
-        </div>
-    </div>
-</section>
 
 <!-- FAQ Section -->
 <section class="faq-section section-padding">
@@ -346,7 +305,7 @@
 
 /* Hero Section */
 .contact-hero {
-    padding: 80px 0;
+    padding: 10px 0;
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(0, 255, 255, 0.05));
     position: relative;
     overflow: hidden;
@@ -367,7 +326,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
-    align-items: center;
     position: relative;
     z-index: 1;
 }
@@ -545,12 +503,12 @@
 }
 
 .contact-form {
-    padding: 50px;
+    padding: 20px;
     border-radius: 12px;
 }
 
 .form-group {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .form-group label {

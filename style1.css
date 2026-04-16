@@ -1119,13 +1119,6 @@ textarea.form-input {
     min-width: 0;
     overflow: hidden;
     width: 100%;
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-    background: #0f172ad9;
-    border: 1px solid #0ff3;
-    box-shadow: 0 8px 32px #00ffff1a;
-    border-radius: 20px;
-    padding: 20px;
 }
 
 /* Top Badges */
@@ -2546,50 +2539,4 @@ textarea.form-input {
                 position: static;
             }
         }
-.sub-menu li a {
-    color: black !important;
-}
-.sub-menu li:hover{
-    color: white !important;
-    padding: 5px;
-    background-color: #2563eb;
-}
 
-.sub-menu{
-    display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 130px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
- 
-  color:black
-
-}
-/* set font color black to ul li a inside .sub-menu */
-
-.menu-item-has-children > a::after {
-    content: "▼";
-    font-size: 0.6rem;
-    margin-left: 0.5rem;
-    transition: transform 0.3s ease;
-}
-.menu-item-has-children::hover {
-    color: #161616;
-    background-color: #ffffff;
-}
-.menu-item-has-children::hover > a::after {
-    transform: rotate(180deg);
-}
-
-.menu-item-has-children:hover .sub-menu {
-    display: block;
-
-}
-.sub-menu li {
-    padding: 5px;
-    list-style: none;
-   
-}
-.sub-menu li a{
-color:black;
-}

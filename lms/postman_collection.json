@@ -1,0 +1,411 @@
+{
+  "info": {
+    "_postman_id": "ica-lms-api-collection",
+    "name": "ICA LMS API",
+    "description": "ICA LMS REST API Collection for Postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "ica-lms"
+  },
+  "item": [
+    {
+      "name": "API Info",
+      "item": [
+        {
+          "name": "Get API Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/info",
+              "host": ["{{base_url}}"],
+              "path": ["info"]
+            },
+            "description": "Get API information - No authentication required"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students?page=1&per_page=20",
+              "host": ["{{base_url}}"],
+              "path": ["students"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                },
+                {
+                  "key": "course_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "batch_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Student",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/1",
+              "host": ["{{base_url}}"],
+              "path": ["students", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith\",\n  \"mobile_no\": \"9876543210\",\n  \"father_name\": \"David Smith\",\n  \"mother_name\": \"Mary Smith\",\n  \"date_of_birth\": \"2000-06-20\",\n  \"gender\": \"Female\",\n  \"category_id\": 1,\n  \"qualification\": \"B.Tech\",\n  \"aadhar_no\": \"1234-5678-9013\",\n  \"address\": \"456 Main Street\",\n  \"course_id\": 5,\n  \"batch_id\": 1,\n  \"fee_amount\": 10000,\n  \"fee_type\": \"one_time\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/students",
+              "host": ["{{base_url}}"],
+              "path": ["students"]
+            }
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith Updated\",\n  \"mobile_no\": \"9876543211\",\n  \"fee_amount\": 11000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/students/1",
+              "host": ["{{base_url}}"],
+              "path": ["students", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/1",
+              "host": ["{{base_url}}"],
+              "path": ["students", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Batches",
+      "item": [
+        {
+          "name": "Get All Batches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/batches",
+              "host": ["{{base_url}}"],
+              "path": ["batches"],
+              "query": [
+                {
+                  "key": "course_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "active",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Batch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/batches/1",
+              "host": ["{{base_url}}"],
+              "path": ["batches", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_name\": \"Batch B 2026\",\n  \"course_id\": 5,\n  \"total_students\": 25,\n  \"batch_start_date\": \"2026-05-01\",\n  \"batch_end_date\": \"2026-10-31\",\n  \"description\": \"Summer batch for 2026\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/batches",
+              "host": ["{{base_url}}"],
+              "path": ["batches"]
+            }
+          }
+        },
+        {
+          "name": "Update Batch",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_name\": \"Batch A 2026 Updated\",\n  \"total_students\": 32,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/batches/1",
+              "host": ["{{base_url}}"],
+              "path": ["batches", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Batch",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/batches/1",
+              "host": ["{{base_url}}"],
+              "path": ["batches", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/courses?page=1&per_page=20",
+              "host": ["{{base_url}}"],
+              "path": ["courses"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/courses/5",
+              "host": ["{{base_url}}"],
+              "path": ["courses", "5"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": ["{{base_url}}"],
+              "path": ["categories"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ID Card & QR Code",
+      "item": [
+        {
+          "name": "Get ID Card (PDF)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/id-card/1?format=pdf",
+              "host": ["{{base_url}}"],
+              "path": ["id-card", "1"],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "pdf"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get ID Card (HTML)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/id-card/1?format=html",
+              "host": ["{{base_url}}"],
+              "path": ["id-card", "1"],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "html"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get QR Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/qr-code/1",
+              "host": ["{{base_url}}"],
+              "path": ["qr-code", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Get Student Payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/payments/student/1",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "student", "1"]
+            }
+          }
+        },
+        {
+          "name": "Record Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student_id\": 1,\n  \"installment_number\": 1,\n  \"amount\": 5000,\n  \"payment_method\": \"online\",\n  \"transaction_id\": \"TXN123456\",\n  \"notes\": \"First installment\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments/record",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "record"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{username}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{password}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://your-site.com/wp-json/ica-lms/v1",
+      "type": "string"
+    },
+    {
+      "key": "username",
+      "value": "your_username",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "your_app_password",
+      "type": "string"
+    }
+  ]
+}

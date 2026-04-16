@@ -10,7 +10,7 @@
             <div class="footer-contact-info">
                 <div class="contact-item">
                     <h5>📧 Email</h5>
-                    <a href="mailto:impulsebirsanagar@gmail.com">impulsebirsanagar@gmail.com</a>
+                    <a href="mailto:info@impulsecomputeracademy.com">info@impulsecomputeracademy.com</a>
                 </div>
                 <div class="contact-item">
                     <h5>📱 Phone</h5>

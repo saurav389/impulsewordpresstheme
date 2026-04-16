@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <main id="primary" class="site-main" role="main">
-    <h1 class="screen-reader-text"><?php bloginfo('name'); ?></h1>
+    <h1 class="screen-reader-text">IMPULSE COMPUTER ACADEMY</h1>
 
   
 
@@ -50,7 +50,7 @@
                 </p>
 
                 <!-- Learning Text -->
-                <p class="hero-learn-text"><span class="text-cyan">Learn:</span> Data Science]</p>
+                <p class="hero-learn-text"><span class="text-cyan">Learn:</span> Data Science</p>
 
                 <!-- Feature Boxes Grid -->
                 <div class="feature-boxes-grid">
@@ -120,7 +120,7 @@
                             <!-- Slide 1: Coding Classroom -->
                             <div class="swiper-slide hero-slide">
                                 <div class="slide-background" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" alt="Modern Classroom" class="slide-image">
+                                    <img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg" alt="Modern Classroom" class="slide-image">
                                     <div class="slide-overlay"></div>
                                 </div>
                                 <div class="slide-content">
@@ -132,7 +132,7 @@
                             <!-- Slide 2: Students Learning -->
                             <div class="swiper-slide hero-slide">
                                 <div class="slide-background" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.unsplash.com/photo-1516321318423-f06f70a504f9?w=800&h=600&fit=crop" alt="Expert Training" class="slide-image">
+                                    <img src="https://images.pexels.com/photos/5483248/pexels-photo-5483248.jpeg" alt="Expert Training" class="slide-image">
                                     <div class="slide-overlay"></div>
                                 </div>
                                 <div class="slide-content">
@@ -144,7 +144,7 @@
                             <!-- Slide 3: Placement Success -->
                             <div class="swiper-slide hero-slide">
                                 <div class="slide-background" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" alt="Career Growth" class="slide-image">
+                                    <img src="https://images.pexels.com/photos/6289065/pexels-photo-6289065.jpeg" alt="Career Growth" class="slide-image">
                                     <div class="slide-overlay"></div>
                                 </div>
                                 <div class="slide-content">

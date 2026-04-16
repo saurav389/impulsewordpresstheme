@@ -1,0 +1,377 @@
+/* ======================================
+   Student Portal - Login Page Styles
+   ====================================== */
+
+.ica-login-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.ica-login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    z-index: 0;
+    opacity: 0.95;
+}
+
+/* Animated background pattern */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.ica-login-box {
+    position: relative;
+    z-index: 1;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 440px;
+    padding: 50px 40px;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ica-login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.ica-login-header h1 {
+    font-size: 36px;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+}
+
+.ica-login-header p {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Form Styling */
+.ica-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ica-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.ica-form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+.ica-form-input {
+    padding: 14px 16px;
+    border: 2px solid #e8f0f7;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.ica-form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ica-form-input::placeholder {
+    color: #bdc3c7;
+}
+
+/* Checkbox Styling */
+.ica-checkbox-group {
+    flex-direction: row;
+    margin-top: 5px;
+}
+
+.ica-checkbox-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+    margin: 0;
+}
+
+.ica-checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+/* Error Message */
+.ica-error-message {
+    font-size: 12px;
+    color: #e74c3c;
+    margin-top: 4px;
+    display: none;
+}
+
+.ica-error-message.show {
+    display: block;
+}
+
+/* Alert Styling */
+.ica-alert {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ica-alert-error {
+    background: #fadbd8;
+    color: #c0392b;
+    border-left: 4px solid #c0392b;
+}
+
+.ica-alert-success {
+    background: #d5f4e6;
+    color: #27ae60;
+    border-left: 4px solid #27ae60;
+}
+
+/* Login Button */
+.ica-login-btn {
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.ica-login-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.ica-login-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.ica-login-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Loading State */
+.ica-login-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.ica-login-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Footer Links */
+.ica-login-footer {
+    margin-top: 30px;
+    text-align: center;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 20px;
+}
+
+.ica-login-footer p {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.ica-login-footer p:last-child {
+    margin-bottom: 0;
+}
+
+.ica-forgot-link,
+.ica-contact-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.ica-forgot-link:hover,
+.ica-contact-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* Message Container */
+#ica-login-message {
+    margin: 0 0 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ica-login-box {
+        max-width: 100%;
+        padding: 40px 30px;
+    }
+
+    .ica-login-header h1 {
+        font-size: 28px;
+    }
+
+    .ica-form-input {
+        padding: 12px 14px;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    .ica-login-btn {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ica-login-container {
+        padding: 10px;
+    }
+
+    .ica-login-box {
+        max-width: 100%;
+        padding: 30px 20px;
+        border-radius: 12px;
+    }
+
+    .ica-login-header {
+        margin-bottom: 30px;
+    }
+
+    .ica-login-header h1 {
+        font-size: 24px;
+    }
+
+    .ica-login-header p {
+        font-size: 12px;
+    }
+
+    .ica-login-form {
+        gap: 16px;
+    }
+
+    .ica-form-group label {
+        font-size: 13px;
+    }
+
+    .ica-form-input {
+        padding: 12px 12px;
+        font-size: 16px;
+    }
+
+    .ica-login-footer {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+
+    .ica-login-footer p {
+        font-size: 12px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ica-login-box {
+        background: #1e1e1e;
+        color: #e0e0e0;
+    }
+
+    .ica-login-header h1,
+    .ica-form-group label {
+        color: #e0e0e0;
+    }
+
+    .ica-login-header p {
+        color: #a0a0a0;
+    }
+
+    .ica-form-input {
+        background: #2a2a2a;
+        border-color: #404040;
+        color: #e0e0e0;
+    }
+
+    .ica-form-input:focus {
+        background: #333;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .ica-form-input::placeholder {
+        color: #666;
+    }
+
+    .ica-login-footer {
+        border-top-color: #404040;
+        color: #a0a0a0;
+    }
+}
