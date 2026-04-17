@@ -123,10 +123,13 @@
          * Fallback to standard WordPress login if AJAX fails
          */
         function wp_login_fallback(username, password) {
+            // Extract wp-login.php URL from admin_url
+            var loginUrl = ICALogin.ajax_url.replace('admin-ajax.php', 'wp-login.php');
+            
             // Create a hidden form for standard login
             var $loginForm = $('<form>')
                 .attr('method', 'post')
-                .attr('action', '/wordpress/wp-login.php')
+                .attr('action', loginUrl)
                 .css('display', 'none');
 
             $loginForm.append($('<input>').attr('type', 'hidden').attr('name', 'log').val(username));

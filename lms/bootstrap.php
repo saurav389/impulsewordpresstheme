@@ -31,6 +31,8 @@ require_once ICA_LMS_PATH . '/includes/class-ica-lms-admin-teacher.php';
 require_once ICA_LMS_PATH . '/includes/class-ica-lms-admin-fees.php';
 require_once ICA_LMS_PATH . '/includes/class-ica-lms-api.php';
 require_once ICA_LMS_PATH . '/includes/class-ica-lms.php';
+require_once ICA_LMS_PATH . '/includes/class-ica-theme-updater.php';
+require_once ICA_LMS_PATH . '/includes/class-ica-theme-update-manager.php';
 
 ICA_LMS::init();
 

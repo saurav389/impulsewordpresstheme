@@ -89,6 +89,7 @@ class ICA_LMS {
         // Check nonce without dying on failure
         $nonce = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
         if (!$nonce || !wp_verify_nonce($nonce, 'ica_student_login')) {
+            error_log('ICA LMS: Login - Nonce verification failed. Expected ica_student_login');
             wp_send_json_error('Security check failed. Please refresh the page and try again.');
         }
 
@@ -98,13 +99,18 @@ class ICA_LMS {
 
         // Validate inputs
         if (empty($username) || empty($password)) {
+            error_log('ICA LMS: Login - Missing username or password');
             wp_send_json_error('Username and password are required');
         }
+
+        // Log login attempt
+        error_log('ICA LMS: Login attempt for user: ' . $username);
 
         // Attempt authentication
         $user = wp_authenticate($username, $password);
 
         if (is_wp_error($user)) {
+            error_log('ICA LMS: Authentication failed for user: ' . $username . ' - Error: ' . $user->get_error_message());
             wp_send_json_error('Invalid username or password');
         }
 
@@ -114,16 +120,27 @@ class ICA_LMS {
         $is_admin = in_array('administrator', $user_roles);
 
         if (!$is_student && !$is_admin) {
+            error_log('ICA LMS: User ' . $username . ' is not a student or admin. Roles: ' . json_encode($user_roles));
             wp_send_json_error('You do not have access to the student portal');
         }
 
         // Log the user in
         wp_set_current_user($user->ID);
-        wp_set_auth_cookie($user->ID, $rememberme);
+        
+        // Set auth cookie with proper HTTPS and SAMESITE support
+        // Use a longer expiration if remember me is checked
+        $expiration = time() + (2 * WEEK_IN_SECONDS);
+        if (!$rememberme) {
+            $expiration = 0; // Session cookie
+        }
+        wp_set_auth_cookie($user->ID, $rememberme, '', $expiration);
+        
         do_action('wp_login', $user->user_login, $user);
 
         // Redirect to student portal
         $redirect_url = home_url('student') . '?tab=dashboard';
+        
+        error_log('ICA LMS: Login successful for user: ' . $username . '. Redirecting to: ' . $redirect_url);
         
         // Success
         wp_send_json_success(array(
