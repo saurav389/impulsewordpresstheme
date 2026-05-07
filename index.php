@@ -1,4 +1,22 @@
-<?php get_header(); ?>
+<?php
+get_header();
+
+$banner_payload = class_exists('Impulse_Clone_Banner_Manager')
+    ? Impulse_Clone_Banner_Manager::get_homepage_payload()
+    : array(
+        'mode' => 'static',
+        'banners' => array(),
+        'settings' => array(
+            'show_navigation' => 1,
+            'show_pagination' => 1,
+        ),
+    );
+
+$hero_container_classes = array('hero-container');
+if ('hidden' === $banner_payload['mode']) {
+    $hero_container_classes[] = 'hero-container-no-banner';
+}
+?>
 
 <main id="primary" class="site-main" role="main">
     <h1 class="screen-reader-text">IMPULSE COMPUTER ACADEMY</h1>
@@ -27,7 +45,7 @@
             <div class="tech-icon icon-4">⬜</div>
         </div>
 
-        <div class="hero-container">
+        <div class="<?php echo esc_attr(implode(' ', $hero_container_classes)); ?>">
             <!-- Left Content -->
             <div class="hero-left">
                 <!-- Top Badges -->
@@ -111,83 +129,95 @@
                 </div>
             </div>
 
+            <?php if ('hidden' !== $banner_payload['mode']) : ?>
             <!-- Right Side - Premium Slider -->
             <div class="hero-right">
                 <div class="slider-container glass-effect">
                     <!-- Swiper Slider -->
-                    <div class="swiper hero-swiper">
+                    <div class="swiper hero-swiper" <?php echo class_exists('Impulse_Clone_Banner_Manager') ? wp_kses_data(Impulse_Clone_Banner_Manager::get_banner_swiper_attributes()) : ''; ?>>
                         <div class="swiper-wrapper">
-                            <!-- Slide 1: Coding Classroom -->
-                            <div class="swiper-slide hero-slide">
-                                <div class="slide-background" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg" alt="Modern Classroom" class="slide-image">
-                                    <div class="slide-overlay"></div>
+                            <?php if ('dynamic' === $banner_payload['mode'] && class_exists('Impulse_Clone_Banner_Manager')) : ?>
+                                <?php foreach ($banner_payload['banners'] as $banner_post) : ?>
+                                    <?php echo Impulse_Clone_Banner_Manager::render_banner_slide($banner_post); ?>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <!-- Slide 1: Coding Classroom -->
+                                <div class="swiper-slide hero-slide">
+                                    <div class="slide-background" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(0, 255, 255, 0.2));">
+                                        <img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg" alt="Modern Classroom" class="slide-image">
+                                        <div class="slide-overlay"></div>
+                                    </div>
+                                    <div class="slide-content">
+                                        <h3 class="slide-title">Modern Classroom</h3>
+                                        <p class="slide-desc">State-of-the-art training facilities with latest technology</p>
+                                    </div>
                                 </div>
-                                <div class="slide-content">
-                                    <h3 class="slide-title">Modern Classroom</h3>
-                                    <p class="slide-desc">State-of-the-art training facilities with latest technology</p>
-                                </div>
-                            </div>
 
-                            <!-- Slide 2: Students Learning -->
-                            <div class="swiper-slide hero-slide">
-                                <div class="slide-background" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.pexels.com/photos/5483248/pexels-photo-5483248.jpeg" alt="Expert Training" class="slide-image">
-                                    <div class="slide-overlay"></div>
+                                <!-- Slide 2: Students Learning -->
+                                <div class="swiper-slide hero-slide">
+                                    <div class="slide-background" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(0, 255, 255, 0.2));">
+                                        <img src="https://images.pexels.com/photos/5483248/pexels-photo-5483248.jpeg" alt="Expert Training" class="slide-image">
+                                        <div class="slide-overlay"></div>
+                                    </div>
+                                    <div class="slide-content">
+                                        <h3 class="slide-title">Expert Training</h3>
+                                        <p class="slide-desc">Learn from industry professionals with years of experience</p>
+                                    </div>
                                 </div>
-                                <div class="slide-content">
-                                    <h3 class="slide-title">Expert Training</h3>
-                                    <p class="slide-desc">Learn from industry professionals with years of experience</p>
-                                </div>
-                            </div>
 
-                            <!-- Slide 3: Placement Success -->
-                            <div class="swiper-slide hero-slide">
-                                <div class="slide-background" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.pexels.com/photos/6289065/pexels-photo-6289065.jpeg" alt="Career Growth" class="slide-image">
-                                    <div class="slide-overlay"></div>
+                                <!-- Slide 3: Placement Success -->
+                                <div class="swiper-slide hero-slide">
+                                    <div class="slide-background" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(0, 255, 255, 0.2));">
+                                        <img src="https://images.pexels.com/photos/6289065/pexels-photo-6289065.jpeg" alt="Career Growth" class="slide-image">
+                                        <div class="slide-overlay"></div>
+                                    </div>
+                                    <div class="slide-content">
+                                        <h3 class="slide-title">Career Growth</h3>
+                                        <p class="slide-desc">100% placement assistance with top companies</p>
+                                    </div>
                                 </div>
-                                <div class="slide-content">
-                                    <h3 class="slide-title">Career Growth</h3>
-                                    <p class="slide-desc">100% placement assistance with top companies</p>
-                                </div>
-                            </div>
 
-                            <!-- Slide 4: Internship Projects -->
-                            <div class="swiper-slide hero-slide">
-                                <div class="slide-background" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" alt="Internship Programs" class="slide-image">
-                                    <div class="slide-overlay"></div>
+                                <!-- Slide 4: Internship Projects -->
+                                <div class="swiper-slide hero-slide">
+                                    <div class="slide-background" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(0, 255, 255, 0.2));">
+                                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" alt="Internship Programs" class="slide-image">
+                                        <div class="slide-overlay"></div>
+                                    </div>
+                                    <div class="slide-content">
+                                        <h3 class="slide-title">Internship Programs</h3>
+                                        <p class="slide-desc">Real-world projects with hands-on experience</p>
+                                    </div>
                                 </div>
-                                <div class="slide-content">
-                                    <h3 class="slide-title">Internship Programs</h3>
-                                    <p class="slide-desc">Real-world projects with hands-on experience</p>
-                                </div>
-                            </div>
 
-                            <!-- Slide 5: Tech Lab -->
-                            <div class="swiper-slide hero-slide">
-                                <div class="slide-background" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(0, 255, 255, 0.2));">
-                                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" alt="Advanced Lab" class="slide-image">
-                                    <div class="slide-overlay"></div>
+                                <!-- Slide 5: Tech Lab -->
+                                <div class="swiper-slide hero-slide">
+                                    <div class="slide-background" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(0, 255, 255, 0.2));">
+                                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" alt="Advanced Lab" class="slide-image">
+                                        <div class="slide-overlay"></div>
+                                    </div>
+                                    <div class="slide-content">
+                                        <h3 class="slide-title">Advanced Lab</h3>
+                                        <p class="slide-desc">Cutting-edge technology and tools for modern development</p>
+                                    </div>
                                 </div>
-                                <div class="slide-content">
-                                    <h3 class="slide-title">Advanced Lab</h3>
-                                    <p class="slide-desc">Cutting-edge technology and tools for modern development</p>
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Navigation -->
+                        <?php if (!empty($banner_payload['settings']['show_navigation'])) : ?>
                         <div class="swiper-button-prev hero-slider-prev"></div>
                         <div class="swiper-button-next hero-slider-next"></div>
+                        <?php endif; ?>
+                        <?php if (!empty($banner_payload['settings']['show_pagination'])) : ?>
                         <div class="swiper-pagination hero-slider-dots"></div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Slider Overlay -->
                     <div class="slider-overlay"></div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </section>
 

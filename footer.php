@@ -71,28 +71,48 @@
 
 <!-- Premium Hero Initialization -->
 <script>
-    // Initialize Swiper
-    const heroSwiper = new Swiper('.hero-swiper', {
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.hero-slider-dots',
-            clickable: true,
-            dynamicBullets: true,
-        },
-        navigation: {
-            nextEl: '.hero-slider-next',
-            prevEl: '.hero-slider-prev',
-        },
-        effect: 'fade',
-        fadeEffect: {
-            crossFade: true,
-        },
-        speed: 800,
-        preventClicks: false,
+    document.addEventListener('DOMContentLoaded', function() {
+        const swiperElement = document.querySelector('.hero-swiper');
+        if (swiperElement && typeof Swiper !== 'undefined') {
+            const autoplayEnabled = swiperElement.dataset.autoplay === '1';
+            const autoplayDelay = parseInt(swiperElement.dataset.delay || '5000', 10);
+            const showPagination = swiperElement.dataset.pagination === '1' && document.querySelector('.hero-slider-dots');
+            const showNavigation = swiperElement.dataset.navigation === '1' && document.querySelector('.hero-slider-next') && document.querySelector('.hero-slider-prev');
+            const pauseOnHover = swiperElement.dataset.pauseHover === '1';
+
+            const heroSwiper = new Swiper(swiperElement, {
+                loop: swiperElement.dataset.loop === '1',
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true,
+                },
+                speed: 800,
+                preventClicks: false,
+                autoplay: autoplayEnabled ? {
+                    delay: Number.isNaN(autoplayDelay) ? 5000 : autoplayDelay,
+                    disableOnInteraction: false,
+                } : false,
+                pagination: showPagination ? {
+                    el: '.hero-slider-dots',
+                    clickable: true,
+                    dynamicBullets: true,
+                } : false,
+                navigation: showNavigation ? {
+                    nextEl: '.hero-slider-next',
+                    prevEl: '.hero-slider-prev',
+                } : false,
+            });
+
+            if (pauseOnHover && heroSwiper.autoplay) {
+                swiperElement.addEventListener('mouseenter', function() {
+                    heroSwiper.autoplay.stop();
+                });
+
+                swiperElement.addEventListener('mouseleave', function() {
+                    heroSwiper.autoplay.start();
+                });
+            }
+        }
     });
 
     // Particle Canvas Animation

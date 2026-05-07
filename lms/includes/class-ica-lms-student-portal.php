@@ -149,6 +149,11 @@ class ICA_LMS_Student_Portal {
                     <p style="margin-top: 5px; color: #666; font-size: 14px;">ID: <?php echo esc_html($student_reg); ?></p>
                     <p>Your Learning Dashboard</p>
                 </div>
+                <div class="ica-portal-actions">
+                    <a href="<?php echo esc_url(wp_logout_url(home_url('/student'))); ?>" class="ica-btn ica-btn-logout">
+                        Logout
+                    </a>
+                </div>
             </div>
 
             <!-- Navigation Tabs -->

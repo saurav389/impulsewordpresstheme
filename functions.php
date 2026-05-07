@@ -8,6 +8,11 @@ if (file_exists($ica_lms_bootstrap)) {
     require_once $ica_lms_bootstrap;
 }
 
+$impulse_banner_manager = get_stylesheet_directory() . '/inc/class-impulse-banner-manager.php';
+if (file_exists($impulse_banner_manager)) {
+    require_once $impulse_banner_manager;
+}
+
 /**
  * TEMPORARY: Force role reset and cache clear for teacher/student post issues
  * Remove this after you verify posts can be created
@@ -47,6 +52,97 @@ function impulse_clone_setup() {
     ));
 }
 add_action('after_setup_theme', 'impulse_clone_setup');
+
+function impulse_clone_get_admin_login_page_id() {
+    static $page_id = null;
+
+    if (null !== $page_id) {
+        return $page_id;
+    }
+
+    $pages = get_posts(array(
+        'post_type'      => 'page',
+        'post_status'    => 'publish',
+        'posts_per_page' => 1,
+        'fields'         => 'ids',
+        'meta_key'       => '_wp_page_template',
+        'meta_value'     => 'wp-admin.php',
+    ));
+
+    $page_id = !empty($pages) ? (int) $pages[0] : 0;
+
+    return $page_id;
+}
+
+function impulse_clone_get_admin_login_page_url($args = array()) {
+    $page_id = impulse_clone_get_admin_login_page_id();
+
+    if (!$page_id) {
+        return '';
+    }
+
+    $url = get_permalink($page_id);
+
+    if (!$url) {
+        return '';
+    }
+
+    return empty($args) ? $url : add_query_arg($args, $url);
+}
+
+add_filter('login_url', function($login_url, $redirect, $force_reauth) {
+    $custom_login_url = impulse_clone_get_admin_login_page_url();
+
+    if (!$custom_login_url) {
+        return $login_url;
+    }
+
+    $args = array();
+
+    if (!empty($redirect)) {
+        $args['redirect_to'] = $redirect;
+    }
+
+    if ($force_reauth) {
+        $args['reauth'] = '1';
+    }
+
+    return impulse_clone_get_admin_login_page_url($args);
+}, 10, 3);
+
+add_filter('logout_url', function($logout_url, $redirect) {
+    $custom_logout_url = impulse_clone_get_admin_login_page_url(array('action' => 'logout'));
+
+    if (!$custom_logout_url) {
+        return $logout_url;
+    }
+
+    if (!empty($redirect)) {
+        $custom_logout_url = add_query_arg('redirect_to', $redirect, $custom_logout_url);
+    }
+
+    return wp_nonce_url($custom_logout_url, 'log-out');
+}, 10, 2);
+
+add_filter('lostpassword_url', function($lostpassword_url, $redirect) {
+    $custom_lostpassword_url = impulse_clone_get_admin_login_page_url(array('action' => 'lostpassword'));
+
+    if (!$custom_lostpassword_url) {
+        return $lostpassword_url;
+    }
+
+    if (!empty($redirect)) {
+        $custom_lostpassword_url = add_query_arg('redirect_to', $redirect, $custom_lostpassword_url);
+    }
+
+    return $custom_lostpassword_url;
+}, 10, 2);
+
+add_filter('register_url', function($register_url) {
+    $custom_register_url = impulse_clone_get_admin_login_page_url(array('action' => 'register'));
+
+    return $custom_register_url ?: $register_url;
+});
 
 // function impulse_clone_get_asset_uri($pattern) {
 //     $matches = glob(get_template_directory() . '/dist/assets/' . $pattern);

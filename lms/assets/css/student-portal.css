@@ -30,6 +30,11 @@
     opacity: 0.9;
 }
 
+.ica-portal-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .ica-portal-user-info p {
     margin: 0;
     font-size: 14px;
@@ -197,6 +202,18 @@
     background: #2980b9;
 }
 
+.ica-btn-logout {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    min-width: 120px;
+}
+
+.ica-btn-logout:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.28);
+    color: #fff;
+}
+
 /* Alert Box */
 .ica-alert {
     background: #e3f2fd;
@@ -328,6 +345,11 @@
     .ica-portal-header {
         grid-template-columns: 1fr;
         padding: 20px;
+        text-align: center;
+    }
+
+    .ica-portal-actions {
+        justify-content: center;
     }
 
     .ica-portal-tabs {
