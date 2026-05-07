@@ -626,7 +626,15 @@ class ICA_LMS_User_Management {
             return $caps;
         }
 
+        if (empty($user_id)) {
+            return $caps;
+        }
+
         $current_user = get_userdata($user_id);
+
+        if (!$current_user || !is_array($current_user->roles)) {
+            return $caps;
+        }
         
         // Check if user is a teacher or student
         $is_teacher = in_array(ICA_LMS_User_Roles::TEACHER_ROLE, $current_user->roles);

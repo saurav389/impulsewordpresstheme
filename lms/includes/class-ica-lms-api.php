@@ -31,9 +31,13 @@ class ICA_LMS_API {
             if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 list($auth_type, $auth_data) = explode(' ', $_SERVER['HTTP_AUTHORIZATION'], 2);
                 if (strtolower($auth_type) === 'basic') {
-                    list($username, $password) = explode(':', base64_decode($auth_data), 2);
-                    $_SERVER['PHP_AUTH_USER'] = $username;
-                    $_SERVER['PHP_AUTH_PW'] = $password;
+                    $decoded_auth = base64_decode($auth_data, true);
+
+                    if ($decoded_auth && strpos($decoded_auth, ':') !== false) {
+                        list($username, $password) = explode(':', $decoded_auth, 2);
+                        $_SERVER['PHP_AUTH_USER'] = $username;
+                        $_SERVER['PHP_AUTH_PW'] = $password;
+                    }
                 }
             }
         }

@@ -1,6 +1,14 @@
 <?php get_header(); ?>
 <?php
 // Template Name: Contact
+
+$contact_courses = get_posts(array(
+    'post_type' => 'courses',
+    'post_status' => 'publish',
+    'posts_per_page' => 100,
+    'orderby' => 'title',
+    'order' => 'ASC',
+));
 ?>
 
 <!-- Contact Page Hero Section -->
@@ -30,6 +38,8 @@
             </div>
             <div class="hero-visual">
                 <form class="contact-form glass-premium" id="contactForm">
+                    <?php wp_nonce_field('contact_form_nonce', 'nonce', false); ?>
+                    
                     <div class="form-group">
                         <label for="name">Full Name *</label>
                         <input type="text" id="name" name="name" required placeholder="John Doe">
@@ -39,7 +49,10 @@
                         <label for="email">Email Address *</label>
                         <input type="email" id="email" name="email" required placeholder="john@example.com">
                     </div>
-
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+91 9876543210">
+                    </div>
                     <div class="form-group">
                         <label for="subject">Subject *</label>
                         <select id="subject" name="subject" required>
@@ -50,6 +63,18 @@
                             <option value="internship">Internship Program</option>
                             <option value="technical">Technical Support</option>
                             <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">Interested Course</label>
+                        <select id="course" name="course">
+                            <option value="">Select a Course</option>
+                            <?php foreach ($contact_courses as $contact_course) : ?>
+                                <option value="<?php echo esc_attr($contact_course->post_title); ?>">
+                                    <?php echo esc_html($contact_course->post_title); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
@@ -915,24 +940,6 @@
     }
 }
 
-/* FAQ Interaction Script */
-document.addEventListener('DOMContentLoaded', function() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', function() {
-            // Close other items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
-            });
-            // Toggle current item
-            item.classList.toggle('active');
-        });
-    });
-});
 </style>
 
 <script>
@@ -951,8 +958,133 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Contact Form Handling - Integrated with Impulse Enquiry Manager Plugin
-    // The form submission is handled by the plugin via AJAX
-    // This ensures enquiries are automatically saved to the database
+    if (typeof window.impulseEnquiryFront !== 'undefined') {
+        return;
+    }
+
+    // Theme fallback: keep the form working if the enquiry plugin is inactive.
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(contactForm);
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+
+            // Get nonce (create if not exists)
+            let nonce = document.querySelector('[name="nonce"]')?.value;
+            if (!nonce && typeof contactFormData !== 'undefined') {
+                nonce = contactFormData.nonce;
+            }
+
+            // Get AJAX URL
+            let ajaxUrl = (typeof contactFormData !== 'undefined') ? contactFormData.ajax_url : '<?php echo admin_url('admin-ajax.php'); ?>';
+
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            // Prepare data for AJAX
+            const data = {
+                action: 'submit_contact_form',
+                nonce: nonce,
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                subject: formData.get('subject'),
+                course: formData.get('course'),
+                message: formData.get('message')
+            };
+
+            // AJAX request
+            fetch(ajaxUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+
+                if (result.success) {
+                    // Show success message
+                    showContactMessage(result.data.message, 'success');
+                    contactForm.reset();
+                    console.log('Contact form submitted successfully');
+                } else {
+                    // Show error message
+                    showContactMessage(result.data?.message || 'There was an error submitting your enquiry. Please try again.', 'error');
+                    console.error('Contact form error:', result.data?.message);
+                }
+            })
+            .catch(error => {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+                console.error('Contact form submission error:', error);
+                showContactMessage('There was an error submitting your enquiry. Please try again.', 'error');
+            });
+        });
+    }
+
+    // Helper function to display messages
+    function showContactMessage(message, type) {
+        // Remove existing message if any
+        const existingMessage = document.getElementById('contactFormMessage');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        // Create message element
+        const messageEl = document.createElement('div');
+        messageEl.id = 'contactFormMessage';
+        messageEl.style.cssText = `
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            animation: slideDown 0.3s ease;
+            ${type === 'success' 
+                ? 'background: rgba(40, 167, 69, 0.2); border: 1px solid rgba(40, 167, 69, 0.5); color: #28a745;' 
+                : 'background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #dc3545;'
+            }
+        `;
+        messageEl.textContent = type === 'success' ? '✓ ' + message : '✗ ' + message;
+
+        // Add animation
+        const style = document.createElement('style');
+        if (!document.getElementById('contactFormAnimations')) {
+            style.id = 'contactFormAnimations';
+            style.textContent = `
+                @keyframes slideDown {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Insert message at top of form
+        contactForm.insertBefore(messageEl, contactForm.firstChild);
+
+        // Auto-remove success message after 5 seconds
+        if (type === 'success') {
+            setTimeout(() => {
+                if (messageEl.parentNode) {
+                    messageEl.remove();
+                }
+            }, 5000);
+        }
+    }
 });
 </script>

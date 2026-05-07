@@ -803,6 +803,18 @@ class ICA_LMS_Exam_Management {
      * Handle form submissions
      */
     public static function handle_form_submission() {
+        if (wp_doing_ajax()) {
+            return;
+        }
+
+        if (
+            !isset($_POST['ica_create_exam']) &&
+            !isset($_POST['ica_update_exam']) &&
+            !isset($_POST['ica_map_courses'])
+        ) {
+            return;
+        }
+
         // Permission check for all submissions
         // Allow both manage_exams capability AND administrator role
         if (!current_user_can('manage_exams') && !current_user_can('manage_options')) {
