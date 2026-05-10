@@ -53,6 +53,28 @@ function impulse_clone_setup() {
 }
 add_action('after_setup_theme', 'impulse_clone_setup');
 
+function impulse_clone_magic_query_vars($vars) {
+    $vars[] = 'mom_magic_view';
+    $vars[] = 'mom_name';
+
+    return $vars;
+}
+add_filter('query_vars', 'impulse_clone_magic_query_vars');
+
+function impulse_clone_normalize_magic_mom_request() {
+    if (empty($_GET['mom_magic_view']) || empty($_GET['name'])) {
+        return;
+    }
+
+    if (empty($_GET['mom_name'])) {
+        $_GET['mom_name'] = sanitize_text_field(wp_unslash($_GET['name']));
+        $_REQUEST['mom_name'] = $_GET['mom_name'];
+    }
+
+    unset($_GET['name'], $_REQUEST['name']);
+}
+impulse_clone_normalize_magic_mom_request();
+
 function impulse_clone_get_admin_login_page_id() {
     static $page_id = null;
 
